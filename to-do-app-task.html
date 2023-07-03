@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>To-Do App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            margin-left: -91px;
+            color: #ef810b;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        input[type="text"]{
+            padding: 31px;
+            font-size: 21px;
+            width: 527px;
+        }
+
+        button[type="submit"] {
+            background-color: rgb(232, 232, 13);
+            color: white;
+            border: none;
+            padding: 38px;
+            margin-left: 33px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color:rgb(48, 156, 239);
+        }
+
+        section {
+            margin-top: 30px;
+        }
+
+        h2 {
+            margin-bottom: 12px;
+            margin-left: 130px;
+            color: #12e3bc;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-left: 130px;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #aaa;
+        }
+
+        .delete-btn {
+            background-color: #4cd20e;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin-left: 900px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>To-Do App</h1>
+    <form style="justify-content: center; display: flex;">
+        <input type="text" placeholder="Add a task...">
+        <button type="submit">Add</button>
+    </form>
+    <section>
+        
+        <h2>Pending Tasks</h2>
+        <ul id="pending-tasks"></ul>
+    </section>
+    <section>
+        
+        <ul id="completed-tasks"></ul>
+    </section>
+    <script>
+        const form = document.querySelector('form');
+        const pendingTasks = document.getElementById('pending-tasks');
+        const completedTasks = document.getElementById('completed-tasks');
+
+        form.addEventListener('submit', addTask);
+
+        function addTask(event) {
+            event.preventDefault();
+            const taskInput = document.querySelector('input[type="text"]');
+            const taskName = taskInput.value;
+            taskInput.value = '';
+            const newTask = document.createElement('li');
+            newTask.innerHTML = `${taskName} <button class="delete-btn">Delete</button>`;
+            newTask.querySelector('.delete-btn').addEventListener('click', deleteTask);
+            newTask.addEventListener('click', completeTask);
+            pendingTasks.appendChild(newTask);
+        }
+
+        function completeTask(event) {
+            if (event.target.tagName === 'LI') {
+                event.target.classList.toggle('completed');
+                if (event.target.classList.contains('completed')) {
+                    completedTasks.appendChild(event.target);
+                } else {
+                    pendingTasks.appendChild(event.target);
+                }
+            }
+        }
+
+        function deleteTask(event) {
+            event.stopPropagation();
+            event.target.parentElement.remove();
+            alert("Task Completed Successfully!")
+        }
+
+        
+
+    </script>
+
+</body>
+
+</html>
